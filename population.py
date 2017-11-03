@@ -1,5 +1,5 @@
 from individual import *
-
+import sys
 class Population:
     chromosome = None
     population_max = 100
@@ -30,16 +30,19 @@ class Population:
         
         return None
     def get_average_fitness(self):
-        return sum(self.__members)/len(self.__members)
+        sum = 0
+        for individual in self.__members:
+            sum += individual.fitness
+        return sum/len(self.__members)
     def get_minimum_fitness(self):
-        minimum = sys.maxint
+        minimum = sys.maxsize
         for member in self.__members:
             if member.fitness < minimum:
                 minimum = member.fitness
         return minimum
     def get_maximum_fitness(self):
-        maximum = -sys.maxint -1
-        for member in __members:
+        maximum = -sys.maxsize -1
+        for member in self.__members:
             if member.fitness > maximum:
                 maximum = member.fitness
         return maximum

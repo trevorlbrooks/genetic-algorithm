@@ -1,10 +1,6 @@
 import csv
 import random
 import math
-#import gene
-#import chromosome 
-#import individual 
-#import population
 from gene import *
 from chromosome import *
 from individual import *
@@ -13,7 +9,7 @@ from population import *
 
 random.seed()
 
-filename = 'DeerHunter.csv'
+filename = 'weather.csv'
 
 def is_int(string):
         try:
@@ -21,8 +17,8 @@ def is_int(string):
             return True
         except ValueError:
             return False
-        
-def read_and_format(filename):        
+
+def read_and_format(filename):
     with open(filename) as f:
         data = list(csv.reader(f))
         header = data[0];
@@ -46,10 +42,10 @@ for col in header:
 for i in range(len(test_data)):
     for j in range(len(header)):
         discrete_values[header[j]].add(test_data[i][j])
-        
+
 for col in header:
     discrete_values[col] = list(discrete_values[col])
-        
+
 chromosome = Chromosome()
 chromosome.generate_chromosome_lengths(discrete_values)
 print(chromosome)
@@ -58,3 +54,8 @@ population = Population()
 population.initialize(chromosome, 100)
 population.run_fitnesses(test_data, header)
 print(population)
+
+print(
+        'avg: ', population.get_average_fitness(), 
+        '  min: ', population.get_minimum_fitness(), 
+        '  max: ', population.get_maximum_fitness() ,'\n')

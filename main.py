@@ -1,6 +1,15 @@
 import csv
 import random
 import math
+#import gene
+#import chromosome 
+#import individual 
+#import population
+from gene import *
+from chromosome import *
+from individual import *
+from population import *
+
 
 random.seed()
 

@@ -1,8 +1,10 @@
+from individual import *
+
 class Population:
-    chromosome
+    chromosome = None
     population_max = 100
     mutation_probability = 0.001
-    preserve_fittest: False
+    preserve_fittest = False
     __members = list()
     def add_member(self):
         return None

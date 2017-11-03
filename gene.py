@@ -1,3 +1,5 @@
+import random
+import math
 class Gene:
     start = 0
     size = 0

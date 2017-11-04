@@ -22,7 +22,7 @@ def read_and_format(filename):
     with open(filename) as f:
         data = list(csv.reader(f))
         header = data[0];
-        data = data[1:]
+        data = data[2:]
     if(is_int(data[0][0]) and data[0][0] == '0' and  not is_int(data[1][0])):
         data = data[1:]
     return data, header
@@ -53,9 +53,18 @@ print(chromosome)
 population = Population()
 population.initialize(chromosome, 100)
 population.run_fitnesses(test_data, header)
-print(population)
+#print(population)
 
 print(
         'avg: ', population.get_average_fitness(), 
         '  min: ', population.get_minimum_fitness(), 
         '  max: ', population.get_maximum_fitness() ,'\n')
+
+next_gen = population.generate_next_gen()
+next_gen.run_fitnesses(test_data, header)
+print(
+        'avg: ', next_gen.get_average_fitness(), 
+        '  min: ', next_gen.get_minimum_fitness(), 
+        '  max: ', next_gen.get_maximum_fitness() ,'\n')
+
+

@@ -1,6 +1,7 @@
 class Individual:
-    binary_chromosome = ''
-    fitness = 0
+    def __init__(self):
+        self.binary_chromosome = ''
+        self.fitness = 0
     def fix_mutation(self):
         return None
     def randomize(self, chromosome):
@@ -36,4 +37,5 @@ class Individual:
                     max = max if max > current else current
         self.fitness = max
         return self.fitness
-
+    def get_fitness(self):
+        return self.fitness if self.fitness != 0 else self.calc_fitness()

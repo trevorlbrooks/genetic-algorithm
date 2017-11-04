@@ -1,10 +1,12 @@
 import random
 import math
 class Gene:
-    start = 0
-    size = 0
-    length = 0
-    decimal_divider = 0
+    def __init__(self):
+        self.start = 0
+        self.size = 0
+        self.length = 0
+        self.decimal_divider = 0
+    
     def randomize(self, is_normalized):
         if is_normalized:
             return (str(bin(random.randrange(0, self.size)))[2:]).zfill(self.length)

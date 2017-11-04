@@ -1,9 +1,11 @@
 from gene import *
 
 class Chromosome:
-    __genes = list()
-    is_normalized = True
-    discrete_values = None
+    def __init__(self):
+        self.__genes = list()
+        self.is_normalized = True
+        self.discrete_values = None
+    
     def generate_chromosome_lengths(self, discrete_values):
         self.discrete_values = discrete_values
         total_bits = 0

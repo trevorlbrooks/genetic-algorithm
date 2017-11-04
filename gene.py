@@ -1,16 +1,13 @@
 import random
 import math
 class Gene:
-    is_normalized = True
     def __init__(self):
         self.start = 0
         self.size = 0
         self.length = 0
-        self.decimal_divider = 0
-    
-    def randomize(self, is_normalized):
-        if is_normalized:
-            return (str(bin(random.randrange(0, self.size)))[2:]).zfill(self.length)
+        self.values = None  
+    def randomize(self):
+        return (str(bin(random.randrange(0, self.size)))[2:]).zfill(self.length)
     def set(self, start, size):
         self.start = start
         self.size = size

@@ -29,8 +29,10 @@ def read_and_format(filename):
     return data, header
 
 def split_test_data(data):
-    test = data[:len(data)//2]
-    data = data[len(data)//2:]
+    #split_point = min(len(data)//2, 50)
+    split_point = len(data)//2
+    test = data[:split_point]
+    data = data[split_point:]
     return test, data
 
 if len(sys.argv) > 1:
@@ -54,7 +56,17 @@ for col in header:
 
 chromosome = Chromosome()
 chromosome.generate_chromosome_lengths(discrete_values)
-print(chromosome)
+
+was_normalized = False
+if chromosome.is_normalized == False:
+    for row in data:
+        for gene in range(0, len(row)):
+            row[gene] = chromosome.get_normalized(gene, row[gene])
+    for row in test_data:
+        for gene in range(0, len(row)):
+            row[gene] = chromosome.get_normalized(gene, row[gene])
+    was_normalized = True
+    chromosome.is_normalized = True
 
 population = Population()
 population.initialize(chromosome, 100)

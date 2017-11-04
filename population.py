@@ -2,11 +2,11 @@ import random
 from individual import *
 import sys
 class Population:
-    population_max = 100
     mutation_probability = 0.001
     preserve_fittest = True
     def __init__(self):
         self.__members = list()
+        self.population_max = 100
         self.chromosome = ''
     def add_member(self, individual):
         self.__members.append(individual)
@@ -69,12 +69,12 @@ class Population:
                 gene = self.chromosome.get_gene(i)
                 #switch binary to set value
                 gene_value = int(member.binary_chromosome[gene.start:gene.start+gene.length], 2)
-                if data[i] == self.chromosome.discrete_values[header[i]][gene_value]:
+                if self.chromosome.get_normalized(i, data[i]) == gene.values[gene_value]:
                     current += 1 / (self.chromosome.get_num_genes() -1)
-            if current > best_data_fitness: # and  member.get_fitness() > best_test_fitness:
+            if current > best_data_fitness and member.get_fitness() != -1: # and  member.get_fitness() > best_test_fitness:
                 gene = self.chromosome.get_gene(len(header)-1)
                 gene_value = int(member.binary_chromosome[gene.start:gene.start+gene.length], 2)
-                ans = self.chromosome.discrete_values[header[len(header)-1]][gene_value]
+                ans = gene.values[gene_value]
                 best_data_fitness = current
                 best_test_fitness = member.get_fitness()
         return ans

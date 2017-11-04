@@ -42,6 +42,7 @@ class Population:
             child2 = self.mutate(child2)
         return child1, child2
     def mutate(self, individual):
+        individual = individual.mutate(self.chromosome) 
         return individual
     def generate_next_gen(self):
         next_gen  = Population()
@@ -58,6 +59,25 @@ class Population:
             next_gen.add_member(child1)
             next_gen.add_member(child2)
         return next_gen
+    def get_prediction(self, header, data):
+        ans = ''
+        best_data_fitness = -1
+        best_test_fitness = -1
+        for member in self.__members:
+            current = 0
+            for i in range(0, len(header)-1):
+                gene = self.chromosome.get_gene(i)
+                #switch binary to set value
+                gene_value = int(member.binary_chromosome[gene.start:gene.start+gene.length], 2)
+                if data[i] == self.chromosome.discrete_values[header[i]][gene_value]:
+                    current += 1 / (self.chromosome.get_num_genes() -1)
+            if current > best_data_fitness: # and  member.get_fitness() > best_test_fitness:
+                gene = self.chromosome.get_gene(len(header)-1)
+                gene_value = int(member.binary_chromosome[gene.start:gene.start+gene.length], 2)
+                ans = self.chromosome.discrete_values[header[len(header)-1]][gene_value]
+                best_data_fitness = current
+                best_test_fitness = member.get_fitness()
+        return ans
     def get_num_members(self):
         return len(self.__members)
     def get_average_fitness(self):
@@ -80,9 +100,6 @@ class Population:
                 fittest = member
                 if(maximum == 1):
                     break
-        #fit = Individual()
-        #fit.binary_chromosome = fittest.binary_chromosome
-        #fit.fitness = fittest.get_fitness()
         self.__members.remove(fittest)
         return fittest
     def get_maximum_fitness(self):

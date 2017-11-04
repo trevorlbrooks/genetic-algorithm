@@ -1,9 +1,22 @@
+import random
+
 class Individual:
     def __init__(self):
         self.binary_chromosome = ''
         self.fitness = 0
-    def fix_mutation(self):
-        return None
+    def mutate(self, chromosome):
+        mutated_gene = chromosome.get_gene(random.randrange(0, chromosome.get_num_genes()))
+        start = mutated_gene.start
+        end = mutated_gene.length + start
+        size = mutated_gene.size
+        gene_value = self.binary_chromosome[start:end]
+
+        if int(gene_value, 2) + 1 < size:
+            new_gene = (str(bin(int(gene_value, 2) + 1))[2:]).zfill(end-start)
+        else:
+            new_gene = (str(bin(int(gene_value, 2) - 1))[2:]).zfill(end-start)
+        self.binary_chromosome = self.binary_chromosome[0:start] + new_gene + self.binary_chromosome[end:]
+        return self
     def randomize(self, chromosome):
         for i in range(0, chromosome.get_num_genes()):
             gene = chromosome.get_gene(i)
@@ -20,7 +33,6 @@ class Individual:
                     gene = chromosome.get_gene(i)
                     #switch binary to set value
                     gene_value = int(self.binary_chromosome[gene.start:gene.start+gene.length], 2)
-                    #print(data[i], '    ', chromosome.discrete_values[header[i]][gene_value], '\n')
                     if data[i] == chromosome.discrete_values[header[i]][gene_value]:
                         current += 1 / (chromosome.get_num_genes() -1)
                 gene = chromosome.get_gene(len(data)-1)
@@ -38,4 +50,4 @@ class Individual:
         self.fitness = max
         return self.fitness
     def get_fitness(self):
-        return self.fitness if self.fitness != 0 else self.calc_fitness()
+        return self.fitness 

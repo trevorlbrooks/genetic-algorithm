@@ -5,11 +5,12 @@ from gene import *
 from chromosome import *
 from individual import *
 from population import *
-
+import sys
 
 random.seed()
 
-filename = 'weather.csv'
+filename = 'class.csv'
+generations = 10
 
 def is_int(string):
         try:
@@ -32,6 +33,11 @@ def split_test_data(data):
     data = data[len(data)//2:]
     return test, data
 
+if len(sys.argv) > 1:
+    filename = sys.argv[1]
+if len(sys.argv) > 2:
+    generations = int(sys.argv[2])
+
 data, header = read_and_format(filename)
 test_data, data = split_test_data(data)
 
@@ -53,18 +59,24 @@ print(chromosome)
 population = Population()
 population.initialize(chromosome, 100)
 population.run_fitnesses(test_data, header)
-#print(population)
 
 print(
         'avg: ', population.get_average_fitness(), 
         '  min: ', population.get_minimum_fitness(), 
-        '  max: ', population.get_maximum_fitness() ,'\n')
+        '  max: ', population.get_maximum_fitness())
 
-next_gen = population.generate_next_gen()
-next_gen.run_fitnesses(test_data, header)
-print(
+for i in range(0, generations):
+    next_gen = population.generate_next_gen()
+    next_gen.run_fitnesses(test_data, header)
+    print(
         'avg: ', next_gen.get_average_fitness(), 
         '  min: ', next_gen.get_minimum_fitness(), 
-        '  max: ', next_gen.get_maximum_fitness() ,'\n')
+        '  max: ', next_gen.get_maximum_fitness() )
+    population = next_gen
 
+correct = 0
+for row in data:
+    if row[len(row)-1] == population.get_prediction(header, row[0:len(row)-1]):
+        correct += 1
 
+print('Num correct: ', correct, '\nPercentage: ', correct/len(data))

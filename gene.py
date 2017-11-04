@@ -1,6 +1,7 @@
 import random
 import math
 class Gene:
+    is_normalized = True
     def __init__(self):
         self.start = 0
         self.size = 0

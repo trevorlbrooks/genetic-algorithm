@@ -1,3 +1,7 @@
+# Trevor Brooks - tbrooks
+# File: gene.py
+# Description: Represent a gene of the problem as a binary string.
+
 import random
 import math
 class Gene:
@@ -5,7 +9,7 @@ class Gene:
         self.start = 0
         self.size = 0
         self.length = 0
-        self.values = None  
+        self.values = None
     def randomize(self):
         return (str(bin(random.randrange(0, self.size)))[2:]).zfill(self.length)
     def set(self, start, size):
